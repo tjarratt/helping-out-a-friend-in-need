@@ -38,13 +38,21 @@ class RootViewController: UITableViewController, UISearchResultsUpdating {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "my-reuse-id", for: indexPath)
-        cell.textLabel?.text = "tap me"
+
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = "tap me and I explode"
+        case 1:
+            cell.textLabel?.text = "tap me for enlightenment"
+        default:
+            cell.textLabel?.text = "This case doesn't exist ¯\\_(ツ)_/¯"
+        }
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 2
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -53,7 +61,20 @@ class RootViewController: UITableViewController, UISearchResultsUpdating {
 
     // MARK : UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NSLog("definitely got here")
+        switch indexPath.row {
+        case 0:
+            let controllerToPresent = UIViewController()
+            self.resultSearchController.present(controllerToPresent, animated: true) {
+                NSLog("The app has probably ALREADY blown up...")
+            }
+        case 1:
+            let controllerToPresent = UIViewController()
+            self.present(controllerToPresent, animated: true) {
+                NSLog("The app should not have blown up!")
+            }
+        default:
+            NSLog("well this is embarassing")
+        }
     }
 
     // MARK: Search Results
